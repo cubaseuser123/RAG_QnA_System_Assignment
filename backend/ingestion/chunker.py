@@ -1,5 +1,5 @@
 import logging 
-from llama.index.core.node_parser import SemanticSplitterNodeParser
+from llama_index.core.node_parser import SemanticSplitterNodeParser
 from llama_index.core.schema import TextNode, Document
 from ingestion.embedder import get_embed_model
 

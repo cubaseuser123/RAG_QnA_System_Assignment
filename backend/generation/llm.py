@@ -8,5 +8,5 @@ def get_llm() -> Groq:
     return Groq(
         model = LLM_MODEL,
         api_key = GROQ_API_KEY,
-        temprature = LLM_TEMPERATURE,
+        temperature = LLM_TEMPERATURE,
     )

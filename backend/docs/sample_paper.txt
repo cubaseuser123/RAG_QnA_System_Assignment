@@ -1,0 +1,12 @@
+Large Language Models (LLMs) and Retrieval-Augmented Generation (RAG)
+By John Doe
+
+Abstract:
+Retrieval-Augmented Generation (RAG) is an architectural pattern that improves the efficacy of large language model (LLM) applications by leveraging custom data. While LLMs are trained on vast amounts of data, their internal knowledge cuts off at a specific point in time, and they do not have access to private enterprise data. RAG solves this by retrieving relevant information from an external knowledge base and providing it to the LLM as context during the generation phase.
+
+The RAG pipeline typically consists of three main stages:
+1. Ingestion: Documents are loaded, chunked into smaller segments, and embedded into dense mathematical vectors (e.g., using bge-small-en-v1.5). These embeddings are stored in a vector database like Neon (PostgreSQL via pgvector) or ChromaDB.
+2. Retrieval: When a user asks a question, the query is embedded into a vector. The system performs a similarity search against the vector database to retrieve the most semantically relevant document chunks. Advanced systems often use hybrid retrieval, which combines dense vector search with sparse keyword search (like BM25) and fuses the results using algorithms like Reciprocal Rank Fusion (RRF).
+3. Generation: The retrieved chunks are injected into a prompt template alongside the user's original query. A large language model (such as Llama 3) then reads the context and generates a precise, grounded answer, severely reducing the chance of hallucination.
+
+This architectural shift moves LLMs from being monolithic knowledge repositories to acting as reasoning engines over provided context.

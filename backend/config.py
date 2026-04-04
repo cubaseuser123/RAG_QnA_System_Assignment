@@ -14,7 +14,7 @@ CHROMA_PERSIST_PATH : str = os.getenv("CHROMA_PERSIST_PATH", "./chroma_db")
 EMBEDDING_MODEL : str = os.getenv("EMBEDDING_MODEL", "BAAI/bge-small-en-v1.5")
 EMBED_DIM : int = 384
 
-TOP_K : int = int(os.getenv("TOK_K", "5"))
+TOP_K : int = int(os.getenv("TOP_K", "5"))
 
 PG_TABLE_NAME : str = "rag_embeddings"
 CHROMA_COLLECTION_NAME : str = "rag_embeddings"

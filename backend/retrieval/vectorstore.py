@@ -11,7 +11,7 @@ from config import(
     EMBED_DIM
 )
 
-logger = logger.getLogger(__name__)
+logger = logging.getLogger(__name__)
 
 def _create_neon_vector_store():
     from llama_index.vector_stores.postgres import PGVectorStore
