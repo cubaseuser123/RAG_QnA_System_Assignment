@@ -54,9 +54,23 @@ def get_vector_store():
     else:
         raise ValueError(f"Unkown VECTOR_STORE value: '{VECTOR_STORE}'. Must be 'neon' or 'chroma'.")
 
+def _sanitize_nodes(nodes: list[TextNode]) -> list[TextNode]:
+    """Strip NUL (0x00) bytes that some PDFs produce — PostgreSQL rejects them."""
+    for node in nodes:
+        if node.text:
+            node.text = node.text.replace("\x00", "")
+        if node.metadata:
+            node.metadata = {
+                k: v.replace("\x00", "") if isinstance(v, str) else v
+                for k, v in node.metadata.items()
+            }
+    return nodes
+
 def build_index_from_nodes(nodes : list[TextNode]) -> VectorStoreIndex:
     vector_store = get_vector_store()
     storage_context = StorageContext.from_defaults(vector_store = vector_store)
+
+    nodes = _sanitize_nodes(nodes)
 
     index = VectorStoreIndex(
         nodes = nodes,

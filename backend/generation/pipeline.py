@@ -7,7 +7,7 @@ logger = logging.getLogger(__name__)
 
 def build_query_engine(retriever) -> RetrieverQueryEngine:
     response_synthesizer = get_response_synthesizer(
-        response_model = 'compact',
+        response_mode = 'simple_summarize',
         text_qa_template = QA_PROMPT_TEMPLATE,
     )
     
@@ -25,10 +25,27 @@ def query(query_engine : RetrieverQueryEngine, question: str) -> dict:
     sources = []
     for node in response.source_nodes:
         meta = node.node.metadata
+        content = node.node.get_content()
+
+        # Filter out garbled/binary chunks (less than 60% printable chars)
+        if len(content) > 0:
+            printable_ratio = sum(1 for c in content if c.isprintable()) / len(content)
+            if printable_ratio < 0.60:
+                logger.debug(f"Skipping garbled chunk (printable ratio: {printable_ratio:.2f})")
+                continue
+
+        # Try multiple page metadata key variants
+        page = (
+            meta.get("page_label")
+            or meta.get("page_number")
+            or meta.get("page")
+            or "N/A"
+        )
+
         sources.append({
-            "file" : meta.get("source_file", meta.get("file_name", "unknown")),
-            "page" : str(meta.get("page_label", "N/A")),
-            "excerpt" : node.node.get_content()[:200],
+            "file" : meta.get("file_name", meta.get("source_file", "unknown")),
+            "page" : str(page),
+            "excerpt" : content[:200],
         })
     return{
         "answer" : str(response),

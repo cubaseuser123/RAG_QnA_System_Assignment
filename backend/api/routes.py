@@ -63,4 +63,4 @@ async def ask_question(request: QuestionRequest):
                 answer = "We don't have enough information in the knowlesge base to answer this question with facts.",
                 sources = [],
             )
-        raise HTTPException(stauts_code = 500, detail=f"Query error: {str(e)}")
+        raise HTTPException(status_code = 500, detail=f"Query error: {str(e)}")

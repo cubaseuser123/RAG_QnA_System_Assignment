@@ -22,3 +22,4 @@ python-dotenv
 pypdf
 # BM25 dependency
 rank-bm25
+llama-index-readers-file
