@@ -36,6 +36,8 @@ Documents intended for the knowledge base are placed into the `backend/docs/` di
 The documents are processed via the `/ingest` endpoint. They are semantically chunked, embedded using `BAAI/bge-small-en-v1.5`, and safely stored in the Neon PostgreSQL database.
 
 ![Ingestion Endpoint Success](./demo_ss/document_ingestion_success.png)
+<br>
+![Neon Database Dashboard](./demo_ss/neon_dash.png)
 
 ### 3. Grounded Q&A with Citations
 Questions asked through the UI are answered strictly based on the retrieved vector context. The exact source chunks, including file names and page numbers (from PDFs), are provided below the answer.
