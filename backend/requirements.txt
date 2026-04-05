@@ -11,9 +11,7 @@ sentence-transformers
 psycopg2-binary
 pgvector
 sqlalchemy
-# ChromaDB fallback
-chromadb
-llama-index-vector-stores-chroma
+
 # API
 fastapi
 uvicorn[standard]
