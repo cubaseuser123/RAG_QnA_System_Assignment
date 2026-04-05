@@ -12,15 +12,19 @@ logging.basicConfig(
     level = logging.INFO,
     format = "%(asctime)s | %(levelname)-7s | %(name)s | %(message)s",
 )
-logger = logging.getlogger(__name__)
+logger = logging.getLogger(__name__)
 
 @asynccontextmanager
 async def lifespan(app : FastAPI):
     logger.info("Starting up...")
     
     Settings.embed_model = get_embed_model()
+    logger.info(f"Embed model loaded: {Settings.embed_model.model_name}")
+
+    Settings.llm = get_llm()
     logger.info(f"LLM loaded: {Settings.llm.model}")
-    logger.info("Startup complete.")
+
+    logger.info("Startup complete. ✅")
     yield
     logger.info("Shutting down...")
 
